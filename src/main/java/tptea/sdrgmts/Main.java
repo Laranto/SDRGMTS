@@ -3,12 +3,14 @@ package tptea.sdrgmts;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import tptea.sdrgmts.util.json.JSONLoader;
 
 import tptea.sdrgmts.util.json.ProbabilityMapper;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello Chummer!");
+        JSONLoader j = new JSONLoader();
         ProbabilityMapper map = new ProbabilityMapper();
         map.put(new Integer(72),"Human");
         map.put(new Integer(9),"Elf");

@@ -1,0 +1,10 @@
+{
+	"type":"race",
+	"data":{
+		"Human":72
+		"Elf":9
+		"Dwarf":6
+		"Orc":10
+		"Troll":2
+	}
+}
