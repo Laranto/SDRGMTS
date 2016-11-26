@@ -4,16 +4,20 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tptea.sdrgmts.model.CharacterTemplate;
 
 /**
  * Interface to Load JSON Files filled with descriptions. 
  */
 public class JSONLoader {
+
+    public static final String DATA_ENTRY = "data";
     
     private File rootFile;
     private JSONParser parser;
@@ -45,13 +49,26 @@ public class JSONLoader {
         return optionMap.keySet();
     }
     
-    // TODO Probably this should not be called the Character, rather template or so...
-    public tptea.sdrgmts.model.Character buildGroupCharacter(String group){
-        tptea.sdrgmts.model.Character c = new tptea.sdrgmts.model.Character(group);
+    private JSONObject parseDataFile(String filePath){
+        File f = new File(rootFile.getParent()+File.separator+filePath);
+        try {
+            JSONObject o = (JSONObject)((JSONObject)parser.parse(new FileReader(f))).get(DATA_ENTRY);
+        return o;
+        } catch(Exception e){
+            e.printStackTrace();
+            return new JSONObject();
+        }
+    }
+    
+    
+    // TODO Probably this should not be called the CharacterTemplate, rather template or so...
+    public CharacterTemplate buildGroupCharacter(String group){
+        CharacterTemplate chara = new CharacterTemplate(group);
         JSONObject o = optionMap.get(group);
-        // TODO Get the file array from the JSON
-        // TODO For each file fill the characteristic in the character
-        
-        return c;
+        for (CharacterTemplate.Characteristic c : CharacterTemplate.Characteristic.values()) {
+            JSONArray fileList = (JSONArray) o.get(c.toString());
+            fileList.forEach((k)->parseDataFile((String) k).forEach((u,v)->chara.addMappingEntry(c, ((Long) v).intValue(), (String) u)));
+        }
+        return chara;
     }
 }
