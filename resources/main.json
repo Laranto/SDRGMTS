@@ -1,6 +1,6 @@
 {
 	"dutch": {
-		"race":"race_netherlands.json"
-		"name":"name_netherlands.json"
+		"race":["dutch/race_netherlands.json"]
+		"name":["dutch/name_netherlands.json"]
 	}
 }

@@ -11,6 +11,13 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello Chummer!");
         JSONLoader j = new JSONLoader();
+        try{
+        j.createOptionMap();
+        } catch (Exception e) {
+            System.err.println("This is not good... :(");
+            e.printStackTrace();
+        }
+                
         ProbabilityMapper map = new ProbabilityMapper();
         map.put(new Integer(72),"Human");
         map.put(new Integer(9),"Elf");
